@@ -1,23 +1,24 @@
-package com.teksystems.service.shoppingcart;
+package com.teksystems.data.entity;
 
+import java.math.BigDecimal;
 
 /**
  * Created by ouazou on 2016-06-22.
  */
-public class CartItem {
+public class BillItem {
 
   private String skuName;
   private int quantity;
+  private BigDecimal amount;
 
-
-  public CartItem(String skuName, int quantity) {
-    if (skuName == null || skuName.isEmpty() || quantity <= 0) {
-      throw new IllegalArgumentException("Illegal value for skuName, quantity");
-    }
-    this.skuName = skuName;
-    this.quantity = quantity;
+  public BillItem() {
   }
 
+  public BillItem(String skuName, int quantity, BigDecimal amount) {
+    this.skuName = skuName;
+    this.quantity = quantity;
+    this.amount = amount;
+  }
 
   public String getSkuName() {
     return skuName;
@@ -35,22 +36,32 @@ public class CartItem {
     this.quantity = quantity;
   }
 
+  public BigDecimal getAmount() {
+    return amount;
+  }
+
+  public void setAmount(BigDecimal amount) {
+    this.amount = amount;
+  }
 
   @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof CartItem)) {
+    if (!(o instanceof BillItem)) {
       return false;
     }
 
-    CartItem cartItem = (CartItem) o;
+    BillItem billItem = (BillItem) o;
 
-    if (quantity != cartItem.quantity) {
+    if (quantity != billItem.quantity) {
       return false;
     }
-    if (!skuName.equals(cartItem.skuName)) {
+    if (!amount.equals(billItem.amount)) {
+      return false;
+    }
+    if (!skuName.equals(billItem.skuName)) {
       return false;
     }
 
@@ -61,6 +72,7 @@ public class CartItem {
   public int hashCode() {
     int result = skuName.hashCode();
     result = 31 * result + quantity;
+    result = 31 * result + amount.hashCode();
     return result;
   }
 }
